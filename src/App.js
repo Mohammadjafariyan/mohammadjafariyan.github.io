@@ -1,142 +1,35 @@
-import React, { Component } from "react";
-import $ from "jquery";
-import "./App.scss";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import About from "./components/About";
-import Experience from "./components/Experience";
-import Projects from "./components/Projects";
-import Skills from "./components/Skills";
-
-class App extends Component {
-
-  constructor(props) {
-    super();
-    this.state = {
-      foo: "bar",
-      resumeData: {},
-      sharedData: {},
-    };
-  }
-
-  applyPickedLanguage(pickedLanguage, oppositeLangIconId) {
-    this.swapCurrentlyActiveLanguage(oppositeLangIconId);
-    document.documentElement.lang = pickedLanguage;
-    var resumePath =
-      document.documentElement.lang === window.$primaryLanguage
-        ? `res_primaryLanguage.json`
-        : `res_secondaryLanguage.json`;
-    this.loadResumeFromPath(resumePath);
-  }
-
-  swapCurrentlyActiveLanguage(oppositeLangIconId) {
-    var pickedLangIconId =
-      oppositeLangIconId === window.$primaryLanguageIconId
-        ? window.$secondaryLanguageIconId
-        : window.$primaryLanguageIconId;
-    document
-      .getElementById(oppositeLangIconId)
-      .removeAttribute("filter", "brightness(40%)");
-    document
-      .getElementById(pickedLangIconId)
-      .setAttribute("filter", "brightness(40%)");
-  }
-
-  componentDidMount() {
-    this.loadSharedData();
-    this.applyPickedLanguage(
-      window.$primaryLanguage,
-      window.$secondaryLanguageIconId
-    );
-  }
-
-  loadResumeFromPath(path) {
-    $.ajax({
-      url: path,
-      dataType: "json",
-      cache: false,
-      success: function (data) {
-        this.setState({ resumeData: data });
-      }.bind(this),
-      error: function (xhr, status, err) {
-        alert(err);
-      },
-    });
-  }
-
-  loadSharedData() {
-    $.ajax({
-      url: `portfolio_shared_data.json`,
-      dataType: "json",
-      cache: false,
-      success: function (data) {
-        this.setState({ sharedData: data });
-        document.title = `${this.state.sharedData.basic_info.name}`;
-      }.bind(this),
-      error: function (xhr, status, err) {
-        alert(err);
-      },
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <Header sharedData={this.state.sharedData.basic_info} />
-        <div className="col-md-12 mx-auto text-center language">
-          <div
-            onClick={() =>
-              this.applyPickedLanguage(
-                window.$primaryLanguage,
-                window.$secondaryLanguageIconId
-              )
-            }
-            style={{ display: "inline" }}
-          >
-            <span
-              className="iconify language-icon mr-5"
-              data-icon="twemoji-flag-for-flag-united-kingdom"
-              data-inline="false"
-              id={window.$primaryLanguageIconId}
-            ></span>
-          </div>
-          <div
-            onClick={() =>
-              this.applyPickedLanguage(
-                window.$secondaryLanguage,
-                window.$primaryLanguageIconId
-              )
-            }
-            style={{ display: "inline" }}
-          >
-            <span
-              className="iconify language-icon"
-              data-icon="twemoji-flag-for-flag-poland"
-              data-inline="false"
-              id={window.$secondaryLanguageIconId}
-            ></span>
-          </div>
-        </div>
-        <About
-          resumeBasicInfo={this.state.resumeData.basic_info}
-          sharedBasicInfo={this.state.sharedData.basic_info}
-        />
-        <Projects
-          resumeProjects={this.state.resumeData.projects}
-          resumeBasicInfo={this.state.resumeData.basic_info}
-        />
-        <Skills
-          sharedSkills={this.state.sharedData.skills}
-          resumeBasicInfo={this.state.resumeData.basic_info}
-        />
-        <Experience
-          resumeExperience={this.state.resumeData.experience}
-          resumeBasicInfo={this.state.resumeData.basic_info}
-        />
-        <Footer sharedBasicInfo={this.state.sharedData.basic_info} />
-      </div>
-    );
-  }
-}
-
+import React, { useState } from 'react';
+import './App.scss';
+const projects = [
+['01','FINTECH · PRODUCT & INFRASTRUCTURE','Talavest','An investment platform, from interface to infrastructure.','Built a gold investment ecosystem spanning a public website, commerce, investor dashboard, and administration. Connected financial APIs and portfolio data to usable interfaces, then owned containerized delivery and production monitoring.','.NET Core / Node.js / React / Next.js / PostgreSQL / Kubernetes','https://talavest.com'],
+['02','TELECOM · ENTERPRISE SYSTEMS','National B2B CRM','Making complex business workflows workable.','At Shaskam, helped rebuild the Telecommunication Company of Iran’s national B2B CRM. Delivered backend services and operational dashboards, KYC workflows, and a configurable form builder so business teams could adapt their processes.','.NET Core / React / Oracle / SQL Server / Jenkins'],
+['03','HEALTHCARE · MULTI-ROLE PLATFORMS','Lsevin','One platform. Different people, different needs.','Built a medical tourism platform connecting international patients and healthcare providers. Developed patient, provider, and administrative workflows with multilingual interfaces, booking, scheduling, and secure role-based access.','.NET Core / React / Next.js / PostgreSQL / Docker','https://lsevin.com'],
+['04','INDUSTRIAL · REAL-TIME SYSTEMS','Ifa Sanat Gharb','Turning live measurements into useful decisions.','Developed remote flowmeter monitoring, real-time data pipelines, and operational dashboards. Built CRM and ERP modules to help production teams move from manual processes to connected software workflows.','.NET / JavaScript / MySQL / Linux']
+];
+const experience = [
+['Apr 2025 — Present','Talavest','Full-stack development & DevOps','Product engineering across financial services, customer interfaces, deployment, and observability.'],
+['2024 — 2025','Lsevin','Full-stack development','Multilingual healthcare workflows for patients, providers, and administrators.'],
+['Aug 2022 — Aug 2024','Ifa Sanat Gharb','Software & R&D engineering','Industrial monitoring, live data, and business process automation.'],
+['Apr 2021 — Nov 2023','Shaskam · TCI contractor','Senior software engineering','Enterprise CRM, backend APIs, configurable workflows, and operational dashboards.'],
+['Jan 2021 — Oct 2022','Independent projects','Full-stack development','Cryptocurrency payments, blockchain integrations, data aggregation, and real-time support chat.'],
+['Mar 2017 — Mar 2018','Iknow.ir','Software engineering','ERP modules, payroll, reporting, and business process workflows.']
+];
+const resumes = [['Full-stack','FullStack'],['Backend / .NET','DotNET_Backend'],['DevOps / Cloud','DevOps_Cloud'],['Frontend / React','Frontend_React'],['AI / LLM','AI_LLM'],['Web3 / Blockchain','Web3_Blockchain'],['WordPress','WordPress']];
+const resume = file => `${process.env.PUBLIC_URL}/resumes/Mohammad_Jafariyan_Resume_${file}.pdf`;
+function App(){const [menuOpen, setMenuOpen] = useState(false); return <>
+<a className="skip-link" href="#main">Skip to content</a>
+<header className="navigation"><a className="brand" href="#home" aria-label="Mohammad Jafariyan, home">MJ<span>.</span></a><button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Close ✕' : 'Menu ☰'}</button><nav id="main-navigation" className={menuOpen ? 'is-open' : ''} aria-label="Main navigation" onClick={() => setMenuOpen(false)}><a href="#about">About</a><a href="#work">Selected work</a><a href="#experience">Experience</a><a className="nav-contact" href="#contact">Let’s talk ↗</a></nav></header>
+<main id="main">
+<section id="home" className="hero wrap"><div><p className="eyebrow">MOHAMMAD JAFARIYAN / SOFTWARE ENGINEER</p><h1>Understand the problem.<br/> Build the <em>right system.</em></h1><p className="intro">I turn complex requirements into software people can use and teams can rely on. From interfaces and APIs to infrastructure, I connect the pieces and take responsibility for the result.</p><div className="hero-actions"><a className="button" href="#work">Explore my work ↗</a><a href="mailto:Mohammad.jafariyan7@gmail.com">Get in touch ↗</a></div><p className="location"><span/> Based in Tabriz, Iran · Ready for remote collaboration</p></div><figure className="profile-figure"><img src={`${process.env.PUBLIC_URL}/images/profile.jpg`} alt="Mountaineering group on a snowy, rocky mountain ridge" width="640" height="640" fetchpriority="high"/><figcaption><span>BEYOND THE KEYBOARD</span>Engineer & mountaineer</figcaption></figure></section>
+<div className="domain-strip"><div className="wrap"><span>EXPERIENCE ACROSS</span><p>Fintech <i>/</i> Telecom <i>/</i> Healthcare <i>/</i> Industrial systems</p></div></div>
+<section className="wrap section about" id="about"><div><p className="eyebrow">01 / THE ENGINEER</p><h2>Broad perspective.<br/><em>Hands-on depth.</em></h2></div><div className="about-copy"><p className="lead">My roles have changed. The responsibility has stayed consistent: understand what needs to work, and make it work.</p><p>Over 8 years of software engineering, I’ve built financial platforms, enterprise workflows, healthcare portals, and industrial monitoring systems. That range helps me see how a decision in one part of a product affects everything around it.</p><p>I bring a strong foundation in backend engineering, practical experience with modern interfaces, and ownership of deployment and operations. I choose tools around the constraints of the problem, learn what the work demands, and follow through from architecture to production.</p><p className="personal-note">Away from the keyboard, I am a mountaineer. Time in the mountains is an important part of my life.</p><div className="about-notes"><span>BSc, Computer Software Engineering<br/><small>University of Bonab · 2013–2017</small></span><span>English · Persian<br/><small>Turkish / Azerbaijani</small></span></div></div></section>
+<section className="work-section" id="work"><div className="wrap section"><div className="section-heading"><div><p className="eyebrow">02 / SELECTED WORK</p><h2>Different domains.<br/><em>Concrete contributions.</em></h2></div><p>A selection of systems I’ve helped design, build, and deliver.</p></div><div className="project-grid">{projects.map(([num,category,name,title,text,tags,link])=><article className="project" key={num}><div className="project-top"><span>{category}</span><span>{num}</span></div><h3>{name}</h3><h4>{title}</h4><p>{text}</p><div className="project-bottom"><p className="tech">{tags}</p>{link&&<a href={link} target="_blank" rel="noopener noreferrer">Visit {name} ↗</a>}</div></article>)}</div></div></section>
+<section className="wrap section"><div className="section-heading"><div><p className="eyebrow">03 / HOW I CONTRIBUTE</p><h2>The right depth,<br/><em>where it matters.</em></h2></div><p>Tools are part of the solution. Engineering is knowing how the parts fit together.</p></div><div className="capability-grid">{[
+['01','Build the core','Design APIs, data models, access controls, and business workflows that support the product’s real requirements.','C# / .NET · Node.js · SQL · PostgreSQL · Oracle'],
+['02','Connect the experience','Translate complex processes into responsive interfaces, role-based dashboards, and useful real-time interactions.','React · Next.js · TypeScript · WebSockets'],
+['03','Own the delivery','Carry software into production with repeatable releases, containerized environments, monitoring, and operational visibility.','Docker · Kubernetes · AWS · CI/CD · Grafana']
+].map(([num,title,text,tools])=><article key={num}><span className="small-number">{num}</span><h3>{title}</h3><p>{text}</p><small>{tools}</small></article>)}</div><div className="additional"><h3>Apply the foundation<br/>to new problems.</h3><p>I also build LLM applications with agent orchestration, retrieval pipelines, and MCP integrations; connect blockchain services to web applications; and develop WordPress and WooCommerce solutions. These extend the same foundation: sound APIs, useful interfaces, and dependable delivery.</p></div></section>
+<section className="experience-section" id="experience"><div className="wrap section"><div className="section-heading"><div><p className="eyebrow">04 / EXPERIENCE</p><h2>A career built<br/><em>around real systems.</em></h2></div><p>Experience includes overlapping employment and independent project engagements.</p></div><div className="timeline">{experience.map(([date,company,role,text])=><article key={company}><p className="date">{date}</p><div><h3>{company}</h3><p className="role">{role}</p></div><p>{text}</p></article>)}</div><details className="resume-list"><summary>Download a resume for your role ↓</summary><div>{resumes.map(([label,file])=><a key={file} href={resume(file)} download>{label} ↗</a>)}</div></details></div></section>
+<section className="wrap section contact" id="contact"><p className="eyebrow">05 / LET’S CONNECT</p><h2>Have a system to build,<br/> or a problem to <em>untangle?</em></h2><p>I’m interested in work where practical engineering, clear communication, and ownership make a difference. Let’s talk about what you need to deliver.</p><a className="email" href="mailto:Mohammad.jafariyan7@gmail.com">Mohammad.jafariyan7@gmail.com ↗</a><div className="socials"><a href="https://github.com/Mohammadjafariyan" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/mohammad-jafariyan7" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href={resume('FullStack')} download>Download resume ↓</a></div></section>
+</main><footer className="wrap"><a className="brand" href="#home">MJ<span>.</span></a><p>Mohammad Jafariyan · Software Engineer</p><a href="#home">Back to top ↑</a></footer></>}
 export default App;
