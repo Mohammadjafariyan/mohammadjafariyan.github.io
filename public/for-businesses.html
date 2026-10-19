@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111f" />
+  <title>AI that helps your business | Mohammad Jafariyan</title>
+  <meta name="description" content="Practical AI for small and medium businesses. Clear guidance, reliable systems, and a specialist you can trust." />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #07111f;
+      --deep: #0d1b2a;
+      --gold: #d4a853;
+      --champagne: #e8c97a;
+      --ivory: #f3eee4;
+      --muted: #9aafc2;
+      --line: rgba(232, 201, 122, 0.22);
+      --teal: #2a7a8c;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Figtree', sans-serif;
+    }
+    html[dir='rtl'] {
+      --font-display: 'Vazirmatn', sans-serif;
+      --font-body: 'Vazirmatn', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ivory);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(ellipse 70% 45% at 0% 0%, rgba(42, 122, 140, 0.2), transparent 55%),
+        radial-gradient(ellipse 50% 35% at 100% 10%, rgba(212, 168, 83, 0.1), transparent 50%),
+        linear-gradient(180deg, var(--navy), var(--deep));
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--champagne); }
+    .wrap { width: min(720px, 100%); margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2rem); }
+    header {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1.25rem clamp(1.25rem, 4vw, 2rem);
+      border-bottom: 1px solid var(--line);
+      max-width: 720px; margin: 0 auto;
+    }
+    .brand { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.04em; }
+    .brand span { color: var(--gold); }
+    .lang { display: flex; gap: 0.15rem; border: 1px solid var(--line); padding: 0.15rem; }
+    .lang button {
+      border: 0; background: transparent; color: var(--muted); font: inherit;
+      font-size: 0.75rem; font-weight: 600; padding: 0.4rem 0.55rem; cursor: pointer;
+    }
+    .lang button.active { background: rgba(232, 201, 122, 0.16); color: var(--champagne); }
+    .hero { padding: 3.5rem 0 2.5rem; }
+    .eyebrow {
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--champagne); font-weight: 600; margin: 0 0 1rem;
+    }
+    html[dir='rtl'] .eyebrow { letter-spacing: 0.03em; text-transform: none; }
+    h1 {
+      font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em;
+      font-size: clamp(2rem, 6vw, 2.85rem); line-height: 1.15; margin: 0 0 1.1rem;
+    }
+    .lead { font-size: 1.15rem; line-height: 1.7; color: var(--muted); margin: 0 0 1.75rem; max-width: 38rem; }
+    .cta {
+      display: inline-flex; align-items: center; min-height: 48px;
+      background: var(--champagne); color: var(--navy); font-weight: 700;
+      padding: 0.85rem 1.35rem;
+    }
+    .cta:hover { background: var(--ivory); color: var(--navy); }
+    .trust {
+      display: flex; flex-wrap: wrap; gap: 0.65rem 1.5rem;
+      margin-top: 1.75rem; font-size: 0.9rem; color: var(--muted);
+    }
+    .trust strong { color: var(--champagne); font-weight: 600; }
+    section { padding: 2.25rem 0; border-top: 1px solid var(--line); }
+    h2 {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(1.35rem, 3vw, 1.7rem); margin: 0 0 0.85rem; letter-spacing: -0.02em;
+    }
+    p { line-height: 1.75; color: var(--muted); margin: 0 0 1rem; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    li {
+      position: relative; padding: 0.85rem 0 0.85rem 1.35rem;
+      border-top: 1px solid var(--line); color: var(--muted); line-height: 1.65;
+    }
+    html[dir='rtl'] li { padding: 0.85rem 1.35rem 0.85rem 0; }
+    li::before {
+      content: ''; position: absolute; top: 1.35rem; left: 0;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--teal);
+    }
+    html[dir='rtl'] li::before { left: auto; right: 0; }
+    li strong { color: var(--ivory); font-weight: 600; }
+    .steps { counter-reset: step; }
+    .steps li { padding-left: 2.75rem; }
+    html[dir='rtl'] .steps li { padding-right: 2.75rem; padding-left: 0; }
+    .steps li::before {
+      content: counter(step); counter-increment: step;
+      width: auto; height: auto; border-radius: 0; background: none;
+      top: 0.9rem; font-family: var(--font-display); font-weight: 700;
+      font-size: 0.9rem; color: var(--gold);
+    }
+    .box {
+      border: 1px solid var(--line); padding: 1.5rem 1.35rem;
+      background: rgba(22, 50, 79, 0.35); margin-top: 0.5rem;
+    }
+    .box p:last-child { margin-bottom: 0; }
+    footer {
+      max-width: 720px; margin: 0 auto; padding: 1.5rem clamp(1.25rem, 4vw, 2rem) 2.5rem;
+      border-top: 1px solid var(--line); display: flex; flex-wrap: wrap;
+      gap: 0.75rem 1.5rem; justify-content: space-between; align-items: center;
+      font-size: 0.85rem; color: var(--muted);
+    }
+    .email {
+      font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+      border-bottom: 1px solid var(--gold); padding-bottom: 0.2rem; color: var(--ivory);
+    }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="./">MJ<span>.</span></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" class="active">EN</button>
+      <button type="button" data-lang="fa">FA</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="tr">TR</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="eyebrow" data-i="eyebrow"></p>
+      <h1 data-i="headline"></h1>
+      <p class="lead" data-i="lead"></p>
+      <a class="cta" href="mailto:Mohammad.jafariyan7@gmail.com" data-i="cta"></a>
+      <div class="trust">
+        <span><strong data-i="trust1label"></strong> <span data-i="trust1"></span></span>
+        <span><strong data-i="trust2label"></strong> <span data-i="trust2"></span></span>
+      </div>
+    </div>
+
+    <section>
+      <h2 data-i="helpTitle"></h2>
+      <p data-i="helpLead"></p>
+      <ul>
+        <li><strong data-i="help1t"></strong> — <span data-i="help1"></span></li>
+        <li><strong data-i="help2t"></strong> — <span data-i="help2"></span></li>
+        <li><strong data-i="help3t"></strong> — <span data-i="help3"></span></li>
+        <li><strong data-i="help4t"></strong> — <span data-i="help4"></span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 data-i="whyTitle"></h2>
+      <ul>
+        <li><strong data-i="why1t"></strong> — <span data-i="why1"></span></li>
+        <li><strong data-i="why2t"></strong> — <span data-i="why2"></span></li>
+        <li><strong data-i="why3t"></strong> — <span data-i="why3"></span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 data-i="howTitle"></h2>
+      <ul class="steps">
+        <li><strong data-i="how1t"></strong> — <span data-i="how1"></span></li>
+        <li><strong data-i="how2t"></strong> — <span data-i="how2"></span></li>
+        <li><strong data-i="how3t"></strong> — <span data-i="how3"></span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 data-i="promiseTitle"></h2>
+      <div class="box">
+        <p data-i="promise1"></p>
+        <p data-i="promise2"></p>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i="nextTitle"></h2>
+      <p data-i="nextLead"></p>
+      <a class="cta" href="mailto:Mohammad.jafariyan7@gmail.com" data-i="cta"></a>
+      <p style="margin-top:1.25rem"><a class="email" href="mailto:Mohammad.jafariyan7@gmail.com">Mohammad.jafariyan7@gmail.com</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <span data-i="footer"></span>
+    <a href="./" data-i="home"></a>
+  </footer>
+
+  <script>
+    const copy = {
+      en: {
+        dir: 'ltr', lang: 'en',
+        eyebrow: 'For small & medium businesses',
+        headline: 'AI that saves time and grows your business—explained simply.',
+        lead: 'You do not need to be a technology expert. I help owners and managers use practical AI tools so daily work gets easier, customers get better answers, and your team spends less time on repetitive tasks.',
+        cta: 'Talk about your business',
+        trust1label: 'Specialist.',
+        trust1: 'Focused on AI systems that actually run in real companies.',
+        trust2label: 'Trusted delivery.',
+        trust2: '8+ years building reliable software for finance, telecom, healthcare, and industry.',
+        helpTitle: 'How I can help your business',
+        helpLead: 'Think of AI as a careful digital assistant for your company—trained on your rules and your information.',
+        help1t: 'Answer customers faster',
+        help1: 'An assistant that replies using your products, prices, and policies—not random internet answers.',
+        help2t: 'Cut repetitive work',
+        help2: 'Draft emails, summaries, reports, and follow-ups so your team focuses on decisions that matter.',
+        help3t: 'Find information quickly',
+        help3: 'Search your documents, manuals, and past tickets in seconds instead of digging through folders.',
+        help4t: 'Connect to tools you already use',
+        help4: 'Link AI to your website, CRM, or internal systems so it fits how you already work.',
+        whyTitle: 'Why business owners work with me',
+        why1t: 'Plain language',
+        why1: 'I explain options in business terms: cost, risk, time saved, and what success looks like.',
+        why2t: 'Specialized skill',
+        why2: 'I build modern AI assistants and full software around them—not just slide decks or one-off experiments.',
+        why3t: 'Careful and trustworthy',
+        why3: 'Your data stays protected. We start small, prove value, then grow—so you stay in control.',
+        howTitle: 'A simple way we work together',
+        how1t: 'Understand your business',
+        how1: 'We pick one clear problem that costs you time or money.',
+        how2t: 'Build a working solution',
+        how2: 'You see a real result you can try—not only theory.',
+        how3t: 'Improve with you',
+        how3: 'We measure what helps, fix what does not, and expand only when it makes sense.',
+        promiseTitle: 'My promise to you',
+        promise1: 'No confusing jargon. No pressure to buy tools you do not need. No “AI magic” claims.',
+        promise2: 'Honest advice, solid engineering, and a partner who stays responsible after launch.',
+        nextTitle: 'Ready for a clear next step?',
+        nextLead: 'Send a short note about your business and the task you want to improve. I will reply with a practical recommendation—whether AI fits or not.',
+        footer: 'Mohammad Jafariyan · AI & software for growing businesses',
+        home: 'Main site',
+      },
+      fa: {
+        dir: 'rtl', lang: 'fa',
+        eyebrow: 'برای کسب‌وکارهای کوچک و متوسط',
+        headline: 'هوش مصنوعی که وقت می‌خرد و کسب‌وکارتان را جلو می‌برد—به زبان ساده.',
+        lead: 'نیازی نیست متخصص فناوری باشید. به صاحبان و مدیران کسب‌وکار کمک می‌کنم از ابزارهای عملی هوش مصنوعی استفاده کنند تا کار روزانه ساده‌تر شود، مشتری پاسخ بهتری بگیرد و تیم کمتر درگیر کارهای تکراری باشد.',
+        cta: 'درباره کسب‌وکارتان صحبت کنیم',
+        trust1label: 'تخصصی.',
+        trust1: 'تمرکز روی سامانه‌های هوش مصنوعی که در شرکت‌های واقعی کار می‌کنند.',
+        trust2label: 'تحویل قابل اعتماد.',
+        trust2: 'بیش از ۸ سال ساخت نرم‌افزار مطمئن برای مالی، مخابرات، سلامت و صنعت.',
+        helpTitle: 'چطور به کسب‌وکارتان کمک می‌کنم',
+        helpLead: 'هوش مصنوعی را مثل یک دستیار دیجیتال دقیق برای شرکت‌تان در نظر بگیرید—آموزش‌دیده با قوانین و اطلاعات خودتان.',
+        help1t: 'پاسخ سریع‌تر به مشتری',
+        help1: 'دستیار‌ی که با محصولات، قیمت‌ها و سیاست‌های شما جواب می‌دهد—نه پاسخ‌های تصادفی اینترنت.',
+        help2t: 'کاهش کارهای تکراری',
+        help2: 'پیش‌نویس ایمیل، خلاصه، گزارش و پیگیری تا تیم روی تصمیم‌های مهم تمرکز کند.',
+        help3t: 'پیدا کردن سریع اطلاعات',
+        help3: 'جستجو در اسناد، راهنماها و تیکت‌های قبلی در چند ثانیه به‌جای گشتن در پوشه‌ها.',
+        help4t: 'اتصال به ابزارهای فعلی',
+        help4: 'اتصال هوش مصنوعی به وب‌سایت، CRM یا سیستم‌های داخلی تا با شیوه کار فعلی‌تان هماهنگ شود.',
+        whyTitle: 'چرا صاحبان کسب‌وکار با من کار می‌کنند',
+        why1t: 'زبان ساده',
+        why1: 'گزینه‌ها را با زبان کسب‌وکار توضیح می‌دهم: هزینه، ریسک، صرفه‌جویی وقت و معیار موفقیت.',
+        why2t: 'مهارت تخصصی',
+        why2: 'دستیارهای مدرن هوش مصنوعی و نرم‌افزار کامل اطراف آن‌ها را می‌سازم—نه فقط ارائه یا آزمایش یک‌باره.',
+        why3t: 'محتاط و قابل اعتماد',
+        why3: 'داده شما محافظت می‌شود. کوچک شروع می‌کنیم، ارزش را ثابت می‌کنیم، بعد رشد می‌دهیم—کنترل با شماست.',
+        howTitle: 'نحوه همکاری ساده',
+        how1t: 'شناخت کسب‌وکار',
+        how1: 'یک مشکل مشخص را انتخاب می‌کنیم که وقت یا پول شما را می‌گیرد.',
+        how2t: 'ساخت راه‌حل واقعی',
+        how2: 'نتیجه‌ای می‌بینید که می‌توانید امتحان کنید—نه فقط نظریه.',
+        how3t: 'بهبود با شما',
+        how3: 'آنچه کمک می‌کند را اندازه می‌گیریم، اشکال را درست می‌کنیم و فقط وقتی گسترش می‌دهیم که منطقی باشد.',
+        promiseTitle: 'وعده من به شما',
+        promise1: 'بدون اصطلاحات گیج‌کننده. بدون فشار برای خرید ابزارهای غیرضروری. بدون ادعای جادوی هوش مصنوعی.',
+        promise2: 'مشاوره صادقانه، مهندسی محکم و همکاری که بعد از راه‌اندازی هم مسئولیت می‌پذیرد.',
+        nextTitle: 'آماده گام بعدی روشن هستید؟',
+        nextLead: 'چند خط درباره کسب‌وکارتان و کاری که می‌خواهید بهتر شود بنویسید. با پیشنهاد عملی پاسخ می‌دهم—حتی اگر هوش مصنوعی مناسب نباشد.',
+        footer: 'محمد جعفریان · هوش مصنوعی و نرم‌افزار برای کسب‌وکارهای در حال رشد',
+        home: 'سایت اصلی',
+      },
+      ar: {
+        dir: 'rtl', lang: 'ar',
+        eyebrow: 'لأصحاب الأعمال الصغيرة والمتوسطة',
+        headline: 'ذكاء اصطناعي يوفّر الوقت وينمّي عملك—بكلمات بسيطة.',
+        lead: 'لست بحاجة لأن تكون خبيراً تقنياً. أساعد أصحاب الأعمال والمديرين على استخدام أدوات ذكاء اصطناعي عملية لتسهيل العمل اليومي، وتحسين إجابات العملاء، وتقليل المهام المتكررة على الفريق.',
+        cta: 'لنناقش عملك',
+        trust1label: 'متخصص.',
+        trust1: 'أركّز على أنظمة ذكاء اصطناعي تعمل فعلياً داخل الشركات.',
+        trust2label: 'تسليم موثوق.',
+        trust2: 'أكثر من 8 سنوات في بناء برمجيات موثوقة للمالية والاتصالات والرعاية الصحية والصناعة.',
+        helpTitle: 'كيف أساعد عملك',
+        helpLead: 'فكّر في الذكاء الاصطناعي كمساعد رقمي دقيق لشركتك—مدرَّب على قواعدك ومعلوماتك.',
+        help1t: 'رد أسرع على العملاء',
+        help1: 'مساعد يجيب وفق منتجاتك وأسعارك وسياساتك—لا إجابات عشوائية من الإنترنت.',
+        help2t: 'تقليل العمل المتكرر',
+        help2: 'مسودات رسائل وملخصات وتقارير ومتابعات ليركّز فريقك على القرارات المهمة.',
+        help3t: 'العثور على المعلومات بسرعة',
+        help3: 'ابحث في مستنداتك وأدلتك وتذاكر الدعم خلال ثوانٍ بدل البحث في المجلدات.',
+        help4t: 'الربط بأدواتك الحالية',
+        help4: 'اربط الذكاء الاصطناعي بموقعك أو نظام العملاء أو أنظمتك الداخلية ليناسب طريقة عملك.',
+        whyTitle: 'لماذا يثق بي أصحاب الأعمال',
+        why1t: 'لغة واضحة',
+        why1: 'أشرح الخيارات بلغة العمل: التكلفة والمخاطر والوقت الموفَّر ومعنى النجاح.',
+        why2t: 'مهارة متخصصة',
+        why2: 'أبني مساعدين حديثين بالذكاء الاصطناعي والبرمجيات الكاملة حولها—لا عروضاً فقط أو تجارب لمرة واحدة.',
+        why3t: 'حذر وجدير بالثقة',
+        why3: 'بياناتك محمية. نبدأ صغيراً، نثبت القيمة، ثم نتوسع—وتبقى السيطرة بيدك.',
+        howTitle: 'طريقة عمل بسيطة',
+        how1t: 'فهم عملك',
+        how1: 'نختار مشكلة واضحة تكلّفك وقتاً أو مالاً.',
+        how2t: 'بناء حل يعمل',
+        how2: 'ترى نتيجة حقيقية يمكنك تجربتها—لا نظرية فقط.',
+        how3t: 'التحسين معك',
+        how3: 'نقيس ما ينفع، نصلح ما لا ينفع، ونتوسع فقط عندما يكون ذلك منطقياً.',
+        promiseTitle: 'عهدي لك',
+        promise1: 'بلا مصطلحات معقّدة. بلا ضغط لشراء أدوات لا تحتاجها. بلا وعود سحرية.',
+        promise2: 'نصيحة صادقة وهندسة متينة وشريك يتحمل المسؤولية بعد الإطلاق أيضاً.',
+        nextTitle: 'جاهز لخطوة تالية واضحة؟',
+        nextLead: 'أرسل ملاحظة قصيرة عن عملك والمهمة التي تريد تحسينها. سأرد بتوصية عملية—حتى إن لم يكن الذكاء الاصطناعي مناسباً.',
+        footer: 'محمد جعفريان · ذكاء اصطناعي وبرمجيات للأعمال النامية',
+        home: 'الموقع الرئيسي',
+      },
+      tr: {
+        dir: 'ltr', lang: 'tr',
+        eyebrow: 'Küçük ve orta ölçekli işletmeler için',
+        headline: 'Zaman kazandıran, işinizi büyüten yapay zekâ—anlaşılır dilde.',
+        lead: 'Teknoloji uzmanı olmanız gerekmez. İşletme sahipleri ve yöneticilerin günlük işi kolaylaştıran, müşteriye daha iyi cevap veren ve ekibin tekrarlayan işlerini azaltan pratik yapay zekâ araçlarını kullanmasına yardımcı olurum.',
+        cta: 'İşinizi konuşalım',
+        trust1label: 'Uzman.',
+        trust1: 'Gerçek şirketlerde çalışan yapay zekâ sistemlerine odaklanırım.',
+        trust2label: 'Güvenilir teslimat.',
+        trust2: 'Finans, telekom, sağlık ve endüstride 8+ yıllık güvenilir yazılım deneyimi.',
+        helpTitle: 'İşinize nasıl yardımcı olurum',
+        helpLead: 'Yapay zekâyı şirketinizin kuralları ve bilgisiyle eğitilmiş dikkatli bir dijital asistan gibi düşünün.',
+        help1t: 'Müşteriye daha hızlı yanıt',
+        help1: 'Ürünleriniz, fiyatlarınız ve politikalarınızla cevap veren bir asistan—rastgele internet cevapları değil.',
+        help2t: 'Tekrarlayan işi azaltın',
+        help2: 'E-posta, özet, rapor ve takip taslakları; ekibiniz önemli kararlara odaklansın.',
+        help3t: 'Bilgiyi hızlı bulun',
+        help3: 'Belgelerinizde, kılavuzlarınızda ve eski destek kayıtlarında saniyeler içinde arayın.',
+        help4t: 'Kullandığınız araçlara bağlayın',
+        help4: 'Yapay zekâyı web sitenize, CRM’inize veya iç sistemlerinize bağlayarak mevcut işinize uydurun.',
+        whyTitle: 'İşletme sahipleri neden benimle çalışır',
+        why1t: 'Sade dil',
+        why1: 'Seçenekleri iş dilinde anlatırım: maliyet, risk, kazanılan zaman ve başarı ölçütü.',
+        why2t: 'Uzmanlık',
+        why2: 'Modern yapay zekâ asistanları ve etraflarındaki yazılımı kurarım—yalnızca sunum veya tek seferlik deneme değil.',
+        why3t: 'Dikkatli ve güvenilir',
+        why3: 'Veriniz korunur. Küçük başlarız, değeri kanıtlarız, sonra büyütürüz—kontrol sizde kalır.',
+        howTitle: 'Birlikte çalışma şeklimiz',
+        how1t: 'İşinizi anlamak',
+        how1: 'Zaman veya para kaybettiren net bir sorunu seçeriz.',
+        how2t: 'Çalışan çözüm kurmak',
+        how2: 'Deneyebileceğiniz gerçek bir sonuç görürsünüz—yalnızca teori değil.',
+        how3t: 'Sizinle iyileştirmek',
+        how3: 'Ne işe yaradığını ölçer, işe yaramayanı düzeltir, yalnızca mantıklıysa genişletiriz.',
+        promiseTitle: 'Size sözüm',
+        promise1: 'Kafa karıştıran jargon yok. İhtiyacınız olmayan araçları dayatma yok. “Sihirli yapay zekâ” iddiası yok.',
+        promise2: 'Dürüst tavsiye, sağlam mühendislik ve yayından sonra da sorumluluk alan bir iş ortağı.',
+        nextTitle: 'Net bir sonraki adıma hazır mısınız?',
+        nextLead: 'İşiniz ve iyileştirmek istediğiniz görev hakkında kısa bir not gönderin. Yapay zekâ uygun olmasa bile pratik bir öneriyle dönerim.',
+        footer: 'Mohammad Jafariyan · Büyüyen işletmeler için yapay zekâ ve yazılım',
+        home: 'Ana site',
+      },
+    };
+
+    function apply(lang) {
+      const t = copy[lang] || copy.en;
+      document.documentElement.lang = t.lang;
+      document.documentElement.dir = t.dir;
+      document.title = t.headline + ' | Mohammad Jafariyan';
+      document.querySelectorAll('[data-i]').forEach(el => {
+        const key = el.getAttribute('data-i');
+        if (t[key] != null) el.textContent = t[key];
+      });
+      document.querySelectorAll('.lang button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      try { localStorage.setItem('mj-offer-lang', lang); } catch (e) {}
+    }
+
+    document.querySelectorAll('.lang button').forEach(btn => {
+      btn.addEventListener('click', () => apply(btn.dataset.lang));
+    });
+
+    let start = 'en';
+    try {
+      const saved = localStorage.getItem('mj-offer-lang');
+      if (saved && copy[saved]) start = saved;
+    } catch (e) {}
+    apply(start);
+  </script>
+</body>
+</html>
