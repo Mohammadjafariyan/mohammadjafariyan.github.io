@@ -3,7 +3,13 @@ import content, { languages } from './i18n/content';
 import './App.scss';
 
 const STORAGE_KEY = 'mj-lang';
-const resumeUrl = `${process.env.PUBLIC_URL}/resumes/Mohammad_Jafariyan_Resume_AI_LLM.pdf`;
+const resumeUrl = `${process.env.PUBLIC_URL}/resumes/Mohammad_Jafariyan_Software_Engineer.pdf`;
+// Languages with published posts in content/blog; others fall back to the English blog.
+const blogLangs = ['fa'];
+const blogUrl = code => `${process.env.PUBLIC_URL}${blogLangs.includes(code) ? `/${code}` : ''}/blog/`;
+const phone = { href: 'tel:+989148980692', label: '+98 914 898 0692' };
+const whatsappUrl = 'https://wa.me/989148980692';
+const telegram = { href: 'https://t.me/MohammadJafariyan7', label: '@MohammadJafariyan7' };
 const profileUrl = `${process.env.PUBLIC_URL}/images/profile.jpg`;
 
 function detectLang() {
@@ -67,6 +73,7 @@ function App() {
           <a href="#services">{t.nav.services}</a>
           <a href="#work">{t.nav.work}</a>
           <a href="#process">{t.nav.process}</a>
+          <a href={blogUrl(lang)}>{t.nav.blog}</a>
           <a className="nav-contact" href="#contact">
             {t.nav.contact}
           </a>
@@ -221,6 +228,26 @@ function App() {
           <a className="email" href={`mailto:${t.contact.email}`}>
             {t.contact.email}
           </a>
+          <ul className="direct-contact">
+            <li>
+              <span>{t.contact.phone}</span>
+              <a href={phone.href} dir="ltr">
+                {phone.label}
+              </a>
+            </li>
+            <li>
+              <span>{t.contact.whatsapp}</span>
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" dir="ltr">
+                {phone.label}
+              </a>
+            </li>
+            <li>
+              <span>{t.contact.telegram}</span>
+              <a href={telegram.href} target="_blank" rel="noopener noreferrer" dir="ltr">
+                {telegram.label}
+              </a>
+            </li>
+          </ul>
           <div className="hero-actions contact-actions">
             <a className="button" href={`mailto:${t.contact.email}`}>
               {t.contact.cta}

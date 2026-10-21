@@ -800,3 +800,8 @@ footer > a:last-child {
     transition: none;
   }
 }
+
+.direct-contact{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-wrap:wrap;gap:8px 36px}
+.direct-contact li{display:flex;flex-direction:column}
+.direct-contact span{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--champagne)}
+.direct-contact a{display:inline-flex;align-items:center;min-height:44px;font-size:17px}

@@ -22,6 +22,7 @@
     "scripts": {
         "start": "node scripts/start.cjs",
         "build": "node scripts/build.cjs",
+        "blog": "node scripts/blog.cjs",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "predeploy": "npm run build",
